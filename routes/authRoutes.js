@@ -10,12 +10,19 @@ module.exports = app => {
   );
 
   // second route handler user visits
-  app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get(
+    '/auth/google/callback',
+    passport.authenticate('google'),
+    (req, res) => {
+      // after authenticate, redirect to survey page
+      res.redirect('/surveys');
+    }
+  );
 
   // logout route handler
   app.get('/api/logout', (req, res) => {
     req.logout();
-    res.send(req.user);
+    res.redirect('/');
   });
 
   // third route handler
