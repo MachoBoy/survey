@@ -1,6 +1,6 @@
 # surveily #
 
-## DAY 6 ##
+## DAY 7 ##
 
 #### objective ####
 * set up the server ( Express, NodeJS, Mongoose, Passport, MongoDB )
