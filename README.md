@@ -11,7 +11,7 @@
 * User can send survey email to their customers
 
 #### DEMO ####
-* https://gruesome-fangs-50958.herokuapp.com/auth/google
+* https://gruesome-fangs-50958.herokuapp.com
 
 
 
