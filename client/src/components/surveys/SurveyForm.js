@@ -4,33 +4,11 @@ import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 import SurveyField from './SurveyField';
 import validateEmails from '../../utils/validateEmails';
-
-const FIELDS = [
-  {
-    label: 'Survey Title',
-    name: 'title',
-    noValueError: 'Please provide a title'
-  },
-  {
-    label: 'Subject Line',
-    name: 'subject',
-    noValueError: 'Please provide a subject'
-  },
-  {
-    label: 'Email Body',
-    name: 'body',
-    noValueError: 'Please provide a body'
-  },
-  {
-    label: 'Recipient List',
-    name: 'emails',
-    noValueError: 'Please provide a recipients'
-  }
-];
+import formField from './formField';
 
 class SurveyForm extends Component {
   renderField() {
-    return _.map(FIELDS, ({ label, name }) => {
+    return _.map(formField, ({ label, name }) => {
       return (
         <Field
           key={name}
@@ -46,14 +24,14 @@ class SurveyForm extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+        <form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
           {this.renderField()}
           <Link to="/surveys" className="red btn-flat white-text">
             Cancel
           </Link>
           <button type="submit" className="teal btn-flat right white-text">
             Next
-            <i className="material-icons right">done</i>
+            <i className="material-icons right">chevron_right</i>
           </button>
         </form>
       </div>
@@ -69,7 +47,7 @@ function validate(values) {
   errors.emails = validateEmails(values.emails || '');
 
   // if there is no value
-  _.each(FIELDS, ({ name, noValueError }) => {
+  _.each(formField, ({ name, noValueError }) => {
     if (!values[name]) {
       errors[name] = noValueError;
     }
@@ -80,5 +58,7 @@ function validate(values) {
 
 export default reduxForm({
   validate,
-  form: 'surveyForm'
+  form: 'surveyForm',
+  // keep the value
+  destroyOnUnmount: false
 })(SurveyForm);
