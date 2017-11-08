@@ -44,7 +44,7 @@ function validate(values) {
   const errors = {};
 
   // validate email address
-  errors.emails = validateEmails(values.emails || '');
+  errors.recipients = validateEmails(values.recipients || '');
 
   // if there is no value
   _.each(formField, ({ name, noValueError }) => {

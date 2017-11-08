@@ -2,8 +2,10 @@ import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import formField from './formField';
+import { withRouter } from 'react-router-dom';
+import * as actions from '../../actions';
 
-const SurveyFormReview = ({ onCancel, formValues }) => {
+const SurveyFormReview = ({ onCancel, formValues, submitSurvey, history }) => {
   const reviewFields = _.map(formField, ({ name, label }) => {
     return (
       <div key={name}>
@@ -16,8 +18,18 @@ const SurveyFormReview = ({ onCancel, formValues }) => {
     <div>
       <h5> please confirm your entries </h5>
       {reviewFields}
-      <button className="yellow darken-3 btn-flat" onClick={onCancel}>
+      <button
+        className="yellow darken-3 white-text btn-flat"
+        onClick={onCancel}
+      >
         Back
+      </button>
+      <button
+        className="green btn-flat right white-text"
+        onClick={() => submitSurvey(formValues, history)} // pass history to action creator
+      >
+        Send Survey
+        <i className="material-icons right">email</i>
       </button>
     </div>
   );
@@ -28,5 +40,5 @@ const mapStateToProps = state => {
     formValues: state.form.surveyForm.values
   };
 };
-
-export default connect(mapStateToProps)(SurveyFormReview);
+// withRouter has object called history
+export default connect(mapStateToProps, actions)(withRouter(SurveyFormReview));
